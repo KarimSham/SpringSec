@@ -15,10 +15,13 @@ import java.util.ArrayList;
 @RequestMapping()
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private RoleService roleService;
+    private final UserService userService;
+    private final RoleService roleService;
+
+    public AdminController(UserService userService, RoleService roleService) {
+        this.userService = userService;
+        this.roleService = roleService;
+    }
 
     @GetMapping("admin")
     public String pageForAdmin(Model model) {

@@ -76,6 +76,7 @@
             <td>
                 <label for="age">Enter age</label>
                 <input type="number" min="0" max="127" th:field="*{age}" id="age">
+                <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</div>
             </td>
         </tr>
         <br>
