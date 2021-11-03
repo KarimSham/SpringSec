@@ -3,6 +3,7 @@ package web.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import web.model.User;
 import web.service.RoleService;
@@ -40,11 +41,15 @@ public class AdminController {
                              @RequestParam("listRoles") ArrayList<Long> roles) {
         if (bindingResult.hasErrors()) {
             return "create";
-        } else {
-            user.setRoles(roleService.findByIdRoles(roles));
-            userService.addUser(user);
-            return "redirect:/admin";
         }
+        if (userService.getUserByLogin(user.getUsername()) != null) {
+            bindingResult.addError(new FieldError("username", "username",
+                    String.format("User with name \"%s\" is already exist!", user.getUsername())));
+            return "create";
+        }
+        user.setRoles(roleService.findByIdRoles(roles));
+        userService.addUser(user);
+        return "redirect:/admin";
     }
 
     @DeleteMapping("admin/delete/{id}")
@@ -65,10 +70,14 @@ public class AdminController {
                            @RequestParam("listRoles") ArrayList<Long>roles) {
         if (bindingResult.hasErrors()) {
             return "edit";
-        } else {
-            user.setRoles(roleService.findByIdRoles(roles));
-            userService.updateUser(user);
-            return "redirect:/admin";
         }
+        if (userService.getUserByLogin(user.getUsername()) != null) {
+            bindingResult.addError(new FieldError("username", "username",
+                    String.format("User with name \"%s\" is already exist!", user.getUsername())));
+            return "create";
+        }
+        user.setRoles(roleService.findByIdRoles(roles));
+        userService.updateUser(user);
+        return "redirect:/admin";
     }
 }
