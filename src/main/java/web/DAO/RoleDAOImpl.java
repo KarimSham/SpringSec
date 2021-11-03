@@ -23,9 +23,8 @@ public class RoleDAOImpl implements RoleDAO{
     }
 
     @Override
-    public Role addRole(Role role) {
+    public void addRole(Role role) {
         entityManager.persist(role);
-        return role;
     }
 
     @Override
