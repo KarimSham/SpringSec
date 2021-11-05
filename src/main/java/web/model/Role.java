@@ -8,7 +8,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "role")
-@Transient
 public class Role implements GrantedAuthority {
     @Id
     private Long id;
