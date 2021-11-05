@@ -71,11 +71,6 @@ public class AdminController {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        if (userService.getUserByLogin(user.getUsername()) != null) {
-            bindingResult.addError(new FieldError("username", "username",
-                    String.format("User with name \"%s\" is already exist!", user.getUsername())));
-            return "create";
-        }
         user.setRoles(roleService.findByIdRoles(roles));
         userService.updateUser(user);
         return "redirect:/admin";
