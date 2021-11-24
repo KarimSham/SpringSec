@@ -1,4 +1,4 @@
-# JM preproject 2.4.2 Spring (Security)
+# Spring Security
 
 ## Условие:
 
